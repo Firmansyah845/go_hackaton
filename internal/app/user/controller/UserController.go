@@ -19,6 +19,8 @@ func CreateUserController(router *echo.Echo, userService service.UserService) {
 	{
 		userApi := api.Group("/hackaton")
 		userApi.POST("/login", inDB.login)
+		userApi.GET("/health/check", inDB.Health)
+		userApi.POST("/validate", inDB.validate)
 	}
 
 }
@@ -54,8 +56,63 @@ func (b *UserController) login(c echo.Context) error {
 
 }
 
+func (b *UserController) validate(c echo.Context) error {
+
+	rules := govalidator.MapData{
+		"from_date": []string{"required"},
+		"to_date":   []string{"required"},
+		"interval":  []string{"required", "numeric"},
+		"user_id":   []string{"required", "numeric"},
+	}
+
+	validate := helper.ValidateRequestFormData(c, rules)
+	if validate != nil {
+		return helper.ReturnResponse(
+			c,
+			http.StatusUnprocessableEntity,
+			validate,
+			nil,
+			"validation error",
+			"validation error")
+	}
+	fromDateParam, err := helper.ToStringDate(c.FormValue("from_date"))
+	if err != nil {
+		return helper.ReturnResponse(
+			c,
+			http.StatusUnprocessableEntity,
+			validate,
+			nil,
+			"error convert",
+			"error convert")
+	}
+	toDateParam, err := helper.ToStringDate(c.FormValue("to_date"))
+	if err != nil {
+		return helper.ReturnResponse(
+			c,
+			http.StatusUnprocessableEntity,
+			validate,
+			nil,
+			"error convert",
+			"error convert")
+	}
+	interval := helper.ToInt(c.FormValue("interval")) * 4
+	userId := helper.ToInt(c.FormValue("user_id"))
+
+	fromDate := helper.StartDay(fromDateParam).AddDate(0, 0, -interval)
+	toDate := helper.EndDay(toDateParam)
+
+	response, err := b.userService.GetData(c.Request().Context(), userId, fromDate.Format("2006-01-02 15:04"), toDate.Format("2006-01-02 15:04"))
+	if err != nil {
+		return helper.ReturnInvalidResponse(http.StatusBadRequest, nil, nil, err.Error(), err.Error())
+	}
+
+	return helper.ReturnResponse(c, http.StatusOK, response, nil,
+		"Success", "Success")
+
+}
+
 func (b *UserController) Health(c echo.Context) error {
 
-	return c.JSON(200, "Service Rule Engine is Running")
+	return c.JSON(200, "Service is Running")
 
 }

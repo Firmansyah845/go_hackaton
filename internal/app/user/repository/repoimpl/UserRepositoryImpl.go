@@ -36,6 +36,35 @@ func (b UserRepoImpl) Login(c context.Context, username, password string) (*dto.
 	return &response, nil
 }
 
+// GetData repository instance
+func (b UserRepoImpl) GetData(c context.Context, userId int, fromDate, toDate string) (*[]dto.SalesResponse, error) {
+
+	var (
+		response []dto.SalesResponse
+		each     dto.SalesResponse
+	)
+
+	param := "BETWEEN '" + fromDate + "' AND '" + toDate + "'"
+
+	args := fmt.Sprintf(`SELECT id, sales_date, value, user_id FROM sales WHERE (sales_date %s) AND user_id = %d`, param, userId)
+
+	if rows, err := config.App.DB.QueryContext(c, args); err != nil {
+		logger.WithFields(logger.Fields{}).Errorf("error get data sales: " + err.Error())
+		return nil, fmt.Errorf("error get data sales : " + err.Error())
+	} else {
+		defer rows.Close()
+		for rows.Next() {
+
+			if err = rows.Scan(&each.ID, &each.SalesDate, &each.Value, &each.UserId); err != nil {
+				logger.WithFields(logger.Fields{}).Infof("ERROR: Can't reach data sales :" + err.Error())
+			}
+			response = append(response, each)
+		}
+	}
+
+	return &response, nil
+}
+
 // CreateUserRepoImpl create user repository instance
 func CreateUserRepoImpl() repository.UserRepository {
 	return &UserRepoImpl{}

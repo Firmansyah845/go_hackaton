@@ -13,6 +13,15 @@ type UserServiceImpl struct {
 	MonetizeService earn.ServiceMonetize
 }
 
+func (r UserServiceImpl) GetData(c context.Context, userId int, fromDate, toDate string) (*[]dto.SalesResponse, error) {
+	response, err := r.UserRepo.GetData(c, userId, fromDate, toDate)
+	if err != nil {
+		return response, err
+	}
+
+	return response, nil
+}
+
 func (r UserServiceImpl) Login(c context.Context, username, password string) (*dto.LoginResponse, error) {
 
 	response, err := r.UserRepo.Login(c, username, password)
