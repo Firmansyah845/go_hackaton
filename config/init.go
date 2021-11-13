@@ -25,7 +25,7 @@ type (
 		DB     *sql.DB `json:"db"`
 	}
 	Config struct {
-		Port        string `envconfig:"APPPORT"`
+		Port        string `envconfig:"PORT"`
 		DB_Host     string `envconfig:"DB_HOST"`
 		DB_Username string `envconfig:"DB_USERNAME"`
 		DB_Port     int    `envconfig:"DB_PORT"`
@@ -66,7 +66,7 @@ func (x *Application) Close() (err error) {
 // LoadConfigs load configuration from yaml
 func (x *Application) LoadConfigs() error {
 
-	err := envconfig.Process("myapp", &x.Config)
+	err := envconfig.Process("", &x.Config)
 	if err != nil {
 		fmt.Println(err.Error())
 		return err
