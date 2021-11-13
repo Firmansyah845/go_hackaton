@@ -1,7 +1,6 @@
 package config
 
 import (
-	"context"
 	"database/sql"
 	"fmt"
 	"github.com/Firmansyah845/go_hackaton/utils/logger"
@@ -11,9 +10,7 @@ import (
 
 	"go.elastic.co/apm/module/apmsql"
 
-	"github.com/go-redis/redis"
 	_ "go.elastic.co/apm/module/apmsql/pq"
-	"go.mongodb.org/mongo-driver/mongo"
 )
 
 var (
@@ -22,25 +19,18 @@ var (
 
 type (
 	Application struct {
-		Name        string          `json:"name"`
-		Port        string          `json:"port"`
-		Config      Config          `json:"app_config"`
-		DB          *sql.DB         `json:"db"`
-		Redis       *redis.Client   `json:"redis"`
-		MongoDB     *mongo.Database `json:"mongoDB"`
-		MongoClient *mongo.Client   `json:"-"`
+		Name   string  `json:"name"`
+		Port   string  `json:"port"`
+		Config Config  `json:"app_config"`
+		DB     *sql.DB `json:"db"`
 	}
 	Config struct {
 		Port        string `envconfig:"APPPORT"`
-		JWT         string `envconfig:"JWT_SECRET"`
 		DB_Host     string `envconfig:"DB_HOST"`
 		DB_Username string `envconfig:"DB_USERNAME"`
 		DB_Port     int    `envconfig:"DB_PORT"`
 		DB_Password string `envconfig:"DB_PASSWORD"`
 		DB_Name     string `envconfig:"DB_NAME"`
-		DB_MaxConn  int    `envconfig:"DB_MAXCONN"`
-		DB_MaxIddle int    `envconfig:"DB_MAXIDDLE"`
-		BASE_URL    string `envconfig:"BASE_URL"`
 	}
 )
 
@@ -67,10 +57,6 @@ func init() {
 
 func (x *Application) Close() (err error) {
 	if err = x.DB.Close(); err != nil {
-		return err
-	}
-
-	if err = x.MongoClient.Disconnect(context.TODO()); err != nil {
 		return err
 	}
 
@@ -106,9 +92,6 @@ func (x *Application) DBinit() error {
 	if err != nil {
 		return err // proper error handling instead of panic
 	}
-
-	db.SetMaxOpenConns(x.Config.DB_MaxConn)
-	db.SetMaxIdleConns(x.Config.DB_MaxIddle)
 	x.DB = db
 	return nil
 }
