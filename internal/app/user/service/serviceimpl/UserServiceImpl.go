@@ -2,14 +2,14 @@ package serviceimpl
 
 import (
 	"context"
-	"go-hackaton/internal/app/user/dto"
-	"go-hackaton/internal/app/user/repository"
-	"go-hackaton/internal/app/user/service"
-	"go-hackaton/internal/pkg/custom/earn"
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/dto"
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/repository"
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/service"
+	"github.com/Firmansyah845/go_hackaton/internal/pkg/custom/earn"
 )
 
 type UserServiceImpl struct {
-	UserRepo       repository.UserRepository
+	UserRepo        repository.UserRepository
 	MonetizeService earn.ServiceMonetize
 }
 

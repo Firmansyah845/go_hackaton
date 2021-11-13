@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"go-hackaton/internal/app/user/dto"
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/dto"
 	"net/http"
 	"time"
 )

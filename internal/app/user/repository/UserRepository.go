@@ -2,7 +2,7 @@ package repository
 
 import (
 	"context"
-	"go-hackaton/internal/app/user/dto"
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/dto"
 )
 
 type UserRepository interface {

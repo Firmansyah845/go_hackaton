@@ -4,10 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"go-hackaton/config"
-	"go-hackaton/internal/app/user/dto"
-	"go-hackaton/internal/app/user/repository"
-	"go-hackaton/utils/logger"
+	"github.com/Firmansyah845/go_hackaton/config"
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/dto"
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/repository"
+	"github.com/Firmansyah845/go_hackaton/utils/logger"
 )
 
 // UserRepoImpl dependency
@@ -18,7 +18,7 @@ type UserRepoImpl struct {
 func (b UserRepoImpl) Login(c context.Context, username, password string) (*dto.LoginResponse, error) {
 
 	var (
-		response dto.LoginResponse
+		response     dto.LoginResponse
 		passwordTemp sql.NullString
 	)
 

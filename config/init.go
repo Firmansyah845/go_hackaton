@@ -4,8 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"github.com/Firmansyah845/go_hackaton/utils/logger"
 	"github.com/kelseyhightower/envconfig"
-	"go-hackaton/utils/logger"
 	"log"
 	"os"
 
@@ -31,16 +31,16 @@ type (
 		MongoClient *mongo.Client   `json:"-"`
 	}
 	Config struct {
-		Port                        string `envconfig:"APPPORT"`
-		JWT                         string `envconfig:"JWT_SECRET"`
-		DB_Host                     string `envconfig:"DB_HOST"`
-		DB_Username                 string `envconfig:"DB_USERNAME"`
-		DB_Port                     int    `envconfig:"DB_PORT"`
-		DB_Password                 string `envconfig:"DB_PASSWORD"`
-		DB_Name                     string `envconfig:"DB_NAME"`
-		DB_MaxConn                  int    `envconfig:"DB_MAXCONN"`
-		DB_MaxIddle                 int    `envconfig:"DB_MAXIDDLE"`
-		BASE_URL                    string `envconfig:"BASE_URL"`
+		Port        string `envconfig:"APPPORT"`
+		JWT         string `envconfig:"JWT_SECRET"`
+		DB_Host     string `envconfig:"DB_HOST"`
+		DB_Username string `envconfig:"DB_USERNAME"`
+		DB_Port     int    `envconfig:"DB_PORT"`
+		DB_Password string `envconfig:"DB_PASSWORD"`
+		DB_Name     string `envconfig:"DB_NAME"`
+		DB_MaxConn  int    `envconfig:"DB_MAXCONN"`
+		DB_MaxIddle int    `envconfig:"DB_MAXIDDLE"`
+		BASE_URL    string `envconfig:"BASE_URL"`
 	}
 )
 
@@ -48,7 +48,7 @@ type (
 func init() {
 	var err error
 	App = &Application{}
-	App.Name = "hackaton"
+	App.Name = "go_hackaton"
 
 	if err = App.LoadConfigs(); err != nil {
 		log.Printf("Load config error : %v", err)

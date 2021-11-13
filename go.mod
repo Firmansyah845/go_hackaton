@@ -1,4 +1,4 @@
-module go-hackaton
+module github.com/Firmansyah845/go_hackaton
 
 // +heroku goVersion go1.17
 go 1.17

@@ -1,10 +1,10 @@
 package controller
 
 import (
+	"github.com/Firmansyah845/go_hackaton/internal/app/user/service"
+	"github.com/Firmansyah845/go_hackaton/utils/helper"
 	"github.com/labstack/echo/v4"
 	"github.com/thedevsaddam/govalidator"
-	"go-hackaton/internal/app/user/service"
-	"go-hackaton/utils/helper"
 	"net/http"
 )
 
@@ -26,8 +26,8 @@ func CreateUserController(router *echo.Echo, userService service.UserService) {
 func (b *UserController) login(c echo.Context) error {
 
 	rules := govalidator.MapData{
-		"username":                []string{"required"},
-		"password":                []string{"required"},
+		"username": []string{"required"},
+		"password": []string{"required"},
 	}
 
 	validate := helper.ValidateRequestFormData(c, rules)

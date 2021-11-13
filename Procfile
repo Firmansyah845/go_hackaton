@@ -1,1 +1,1 @@
-web: go-hackaton
+web: go_hackaton
