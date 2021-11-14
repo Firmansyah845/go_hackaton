@@ -6,5 +6,5 @@ import (
 )
 
 type ServiceForecasting interface {
-	GetDataForecasting(ctx context.Context, request []dto.LoginResponse) error
+	GetDataForecasting(ctx context.Context, request dto.PayloadForecast) (*dto.ResponseForecast, error)
 }

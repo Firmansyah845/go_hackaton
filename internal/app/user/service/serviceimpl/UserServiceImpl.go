@@ -13,15 +13,29 @@ type UserServiceImpl struct {
 	forecastService forecast.ServiceForecasting
 }
 
-func (r UserServiceImpl) GetData(c context.Context, userId int, fromDate, toDate string) (*[]dto.SalesResponse, error) {
-	response, err := r.UserRepo.GetData(c, userId, fromDate, toDate)
+func (r UserServiceImpl) GetData(c context.Context, userId, period int, fromDate, toDate, fromDateActual string) (*dto.ResponseForecast, *[]dto.SalesResponse, error) {
+	_, data, err := r.UserRepo.GetData(c, userId, fromDate, toDate)
 	if err != nil {
-		return response, err
+		return nil, nil, err
 	}
 
 	//hit ke backend phyton
+	request := dto.PayloadForecast{
+		UserId: userId,
+		Period: period,
+		Data:   *data,
+	}
+	responseForecast, err := r.forecastService.GetDataForecasting(c, request)
+	if err != nil {
+		return nil, nil, err
+	}
 
-	return response, nil
+	responseActual, _, err := r.UserRepo.GetData(c, userId, fromDateActual, toDate)
+	if err != nil {
+		return nil, nil, err
+	}
+
+	return responseForecast, responseActual, nil
 }
 
 func (r UserServiceImpl) Login(c context.Context, username, password string) (*dto.LoginResponse, error) {

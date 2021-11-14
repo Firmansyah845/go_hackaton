@@ -7,5 +7,5 @@ import (
 
 type UserService interface {
 	Login(c context.Context, username, password string) (*dto.LoginResponse, error)
-	GetData(c context.Context, userId int, fromDate, toDate string) (*[]dto.SalesResponse, error)
+	GetData(c context.Context, userId, period int, fromDate, toDate, fromDateActual string) (*dto.ResponseForecast, *[]dto.SalesResponse, error)
 }

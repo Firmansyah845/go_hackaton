@@ -7,5 +7,5 @@ import (
 
 type UserRepository interface {
 	Login(c context.Context, username, password string) (*dto.LoginResponse, error)
-	GetData(c context.Context, userId int, fromDate, toDate string) (*[]dto.SalesResponse, error)
+	GetData(c context.Context, userId int, fromDate, toDate string) (*[]dto.SalesResponse, *[]dto.Data, error)
 }

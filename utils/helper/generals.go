@@ -44,6 +44,21 @@ func ReturnResponse(c echo.Context, httpcode int, data, meta interface{}, messag
 	return c.JSON(httpcode, responseBody)
 }
 
+func ReturnResponseData(c echo.Context, httpcode int, data, dataActual, meta interface{}, messageClient, messageServer string) error {
+	responseBody := map[string]interface{}{
+		"data_predict": data,
+		"data_actual":  dataActual,
+		"meta":         meta,
+		"status": map[string]interface{}{
+			"code":           httpcode,
+			"message_client": messageClient,
+			"message_server": messageServer,
+		},
+	}
+
+	return c.JSON(httpcode, responseBody)
+}
+
 func ValidateRequestFormData(c echo.Context, rules govalidator.MapData) (i interface{}) {
 	opts := govalidator.Options{
 		Request: c.Request(),
