@@ -5,12 +5,12 @@ import (
 	"github.com/Firmansyah845/go_hackaton/internal/app/user/dto"
 	"github.com/Firmansyah845/go_hackaton/internal/app/user/repository"
 	"github.com/Firmansyah845/go_hackaton/internal/app/user/service"
-	"github.com/Firmansyah845/go_hackaton/internal/pkg/custom/earn"
+	"github.com/Firmansyah845/go_hackaton/internal/pkg/custom/forecast"
 )
 
 type UserServiceImpl struct {
 	UserRepo        repository.UserRepository
-	MonetizeService earn.ServiceMonetize
+	forecastService forecast.ServiceForecasting
 }
 
 func (r UserServiceImpl) GetData(c context.Context, userId int, fromDate, toDate string) (*[]dto.SalesResponse, error) {
@@ -18,6 +18,8 @@ func (r UserServiceImpl) GetData(c context.Context, userId int, fromDate, toDate
 	if err != nil {
 		return response, err
 	}
+
+	//hit ke backend phyton
 
 	return response, nil
 }
@@ -33,6 +35,6 @@ func (r UserServiceImpl) Login(c context.Context, username, password string) (*d
 }
 
 // CreateUserServiceImpl create user service instance
-func CreateUserServiceImpl(repo repository.UserRepository, monetizeService earn.ServiceMonetize) service.UserService {
-	return UserServiceImpl{repo, monetizeService}
+func CreateUserServiceImpl(repo repository.UserRepository, forecastService forecast.ServiceForecasting) service.UserService {
+	return UserServiceImpl{repo, forecastService}
 }

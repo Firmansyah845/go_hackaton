@@ -25,12 +25,13 @@ type (
 		DB     *sql.DB `json:"db"`
 	}
 	Config struct {
-		Port        string `envconfig:"PORT"`
-		DB_Host     string `envconfig:"DB_HOST"`
-		DB_Username string `envconfig:"DB_USERNAME"`
-		DB_Port     int    `envconfig:"DB_PORT"`
-		DB_Password string `envconfig:"DB_PASSWORD"`
-		DB_Name     string `envconfig:"DB_NAME"`
+		Port                 string `envconfig:"PORT"`
+		DB_Host              string `envconfig:"DB_HOST"`
+		DB_Username          string `envconfig:"DB_USERNAME"`
+		DB_Port              int    `envconfig:"DB_PORT"`
+		DB_Password          string `envconfig:"DB_PASSWORD"`
+		DB_Name              string `envconfig:"DB_NAME"`
+		URL_FORECAST_SERVICE string `envconfig:"URL_FORECAST_SERVICE"`
 	}
 )
 

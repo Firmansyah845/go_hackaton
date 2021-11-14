@@ -6,8 +6,9 @@ import (
 	usercontroller "github.com/Firmansyah845/go_hackaton/internal/app/user/controller"
 	userrepo "github.com/Firmansyah845/go_hackaton/internal/app/user/repository/repoimpl"
 	userservice "github.com/Firmansyah845/go_hackaton/internal/app/user/service/serviceimpl"
-	"github.com/Firmansyah845/go_hackaton/internal/pkg/custom/earn"
+	"github.com/Firmansyah845/go_hackaton/internal/pkg/custom/forecast"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"net/http"
 	"os"
 	"os/signal"
@@ -20,8 +21,15 @@ func main() {
 
 	e := echo.New()
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"*"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: true,
+	}))
+
 	//user usecase
-	monetizeService := earn.NewServiceMonetize()
+	monetizeService := forecast.NewServiceMonetize()
 	rulesRepo := userrepo.CreateUserRepoImpl()
 	rulesService := userservice.CreateUserServiceImpl(rulesRepo, monetizeService)
 	usercontroller.CreateUserController(e, rulesService)

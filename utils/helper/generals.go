@@ -180,3 +180,19 @@ func parseDateWith(s string, dates []string) (d time.Time, e error) {
 	}
 	return d, fmt.Errorf("unable to parse date: %s", s)
 }
+
+func SumInt(array []int) int {
+	result := 0
+	for _, v := range array {
+		result += v
+	}
+	return result
+}
+
+func SumFloat64(array []float64) float64 {
+	result := 0.0
+	for _, v := range array {
+		result += v
+	}
+	return result
+}
