@@ -141,7 +141,7 @@ func (b *UserController) DataDefault(c echo.Context) error {
 
 	fromDateActual := helper.StartDay(time.Now()).AddDate(0, 0, -interval)
 
-	response, responseActual, err := b.userService.GetData(c.Request().Context(), userId, interval,
+	response, responseActual, err := b.userService.GetData(c.Request().Context(), userId, 7,
 		fromDate.Format("2006-01-02 15:04"), toDate.Format("2006-01-02 15:04"),
 		fromDateActual.Format("2006-01-02 15:04"))
 	if err != nil {
