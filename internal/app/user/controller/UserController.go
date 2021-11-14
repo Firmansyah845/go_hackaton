@@ -139,7 +139,7 @@ func (b *UserController) DataDefault(c echo.Context) error {
 	fromDate := helper.StartDay(time.Now()).AddDate(0, 0, -interval)
 	toDate := helper.EndDay(time.Now())
 
-	fromDateActual := helper.StartDay(time.Now()).AddDate(0, 0, -7)
+	fromDateActual := helper.StartDay(time.Now()).AddDate(0, 0, -interval)
 
 	response, responseActual, err := b.userService.GetData(c.Request().Context(), userId, interval,
 		fromDate.Format("2006-01-02 15:04"), toDate.Format("2006-01-02 15:04"),
