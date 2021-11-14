@@ -98,14 +98,15 @@ func (b *UserController) validate(c echo.Context) error {
 			"error convert")
 	}
 	interval := helper.ToInt(c.FormValue("interval")) * 4
+	period := helper.ToInt(c.FormValue("interval"))
 	userId := helper.ToInt(c.FormValue("user_id"))
 
 	fromDate := helper.StartDay(fromDateParam).AddDate(0, 0, -interval)
 	toDate := helper.EndDay(toDateParam)
 
-	fromDateActual := helper.StartDay(fromDateParam).AddDate(0, 0, 0)
+	fromDateActual := helper.StartDay(fromDateParam).AddDate(0, 0, -interval)
 
-	response, responseActual, err := b.userService.GetData(c.Request().Context(), userId, interval,
+	response, responseActual, err := b.userService.GetData(c.Request().Context(), userId, period,
 		fromDate.Format("2006-01-02 15:04"), toDate.Format("2006-01-02 15:04"),
 		fromDateActual.Format("2006-01-02 15:04"))
 	if err != nil {
