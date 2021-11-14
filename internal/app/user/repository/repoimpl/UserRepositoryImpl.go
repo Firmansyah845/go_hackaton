@@ -48,7 +48,7 @@ func (b UserRepoImpl) GetData(c context.Context, userId int, fromDate, toDate st
 
 	param := "BETWEEN '" + fromDate + "' AND '" + toDate + "'"
 
-	args := fmt.Sprintf(`SELECT id, sales_date, value, user_id FROM sales WHERE (sales_date %s) AND user_id = %d`, param, userId)
+	args := fmt.Sprintf(`SELECT id, sales_date, value, user_id FROM sales WHERE (sales_date %s) AND user_id = %d ORDER BY sales_date ASC`, param, userId)
 
 	if rows, err := config.App.DB.QueryContext(c, args); err != nil {
 		logger.WithFields(logger.Fields{}).Errorf("error get data sales: " + err.Error())
