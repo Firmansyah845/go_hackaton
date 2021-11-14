@@ -29,7 +29,7 @@ type Data struct {
 
 type ResponseForecast struct {
 	Messages []struct {
-		DS     int     `json:"ds"`
+		DS     string  `json:"ds"`
 		UserId int     `json:"user_id"`
 		Yhat   float64 `json:"yhat"`
 	} `json:"messages"`
